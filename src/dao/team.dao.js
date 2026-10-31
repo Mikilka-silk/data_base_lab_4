@@ -57,6 +57,50 @@ class TeamDAO {
     );
     return rows;
   }
+
+  // ЛАБКА 5
+
+  // Виклик процедури параметризованої вставки (AddSponsor)
+  async callAddSponsor(name, industry) {
+    const [result] = await pool.query("CALL AddSponsor(?, ?)", [
+      name,
+      industry,
+    ]);
+    return result;
+  }
+
+  // Виклик процедури для зв'язку М:М (AddSponsorshipByNames)
+  async callAddSponsorshipByNames(
+    teamName,
+    sponsorName,
+    contractMln,
+    startYear,
+  ) {
+    const [result] = await pool.query(
+      "CALL AddSponsorshipByNames(?, ?, ?, ?)",
+      [teamName, sponsorName, contractMln, startYear],
+    );
+    return result;
+  }
+
+  // Виклик процедури пакетної вставки (GenerateTestSponsors)
+  async callGenerateTestSponsors() {
+    const [result] = await pool.query("CALL GenerateTestSponsors()");
+    return result;
+  }
+
+  // Виклик процедури з SELECT, що використовує функцію (ShowMaxDriverSalary)
+  async callShowMaxDriverSalary() {
+    const [result] = await pool.query("CALL ShowMaxDriverSalary()");
+    // Процедура повертає масив результатів, беремо перший набір
+    return result[0];
+  }
+
+  // Виклик процедури з курсором (SplitDriversRandomly)
+  async callSplitDriversRandomly() {
+    const [result] = await pool.query("CALL SplitDriversRandomly()");
+    return result;
+  }
 }
 
 module.exports = new TeamDAO();

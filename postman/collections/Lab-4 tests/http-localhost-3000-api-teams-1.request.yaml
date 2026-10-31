@@ -1,0 +1,17 @@
+$kind: http-request
+name: http://localhost:3000/api/teams/1
+description: ""
+url: http://localhost:3000/api/teams/1
+method: PUT
+body:
+  type: json
+  content: "{\r
+
+    \  \"name\": \"Мустанг\",\r
+
+    \  \"base_location\": \"Київ\",\r
+
+    \  \"team_principal\": \"Ілона Лагун\"\r
+
+    }"
+order: 2000

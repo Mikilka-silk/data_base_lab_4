@@ -1,17 +1,14 @@
 const teamDao = require("../dao/team.dao");
 
 class TeamService {
-  // Отримання всіх команд (з формуванням DTO)
   async getAllTeams() {
     const teams = await teamDao.findAll();
-    // DTO (Data Transfer Object) - повертаємо лише потрібні поля у зручному форматі
     return teams.map((t) => ({
       id: t.team_id,
       teamName: t.name,
     }));
   }
 
-  // Отримання пілотів конкретної команди (M:1)
   async getTeamDrivers(teamId) {
     return await teamDao.getDriversByTeam(teamId);
   }
@@ -39,7 +36,6 @@ class TeamService {
     return { id, ...teamData };
   }
 
-  // Видалення команди
   async deleteTeam(id) {
     const affected = await teamDao.delete(id);
     if (affected === 0) {
@@ -48,9 +44,52 @@ class TeamService {
     return { message: "Команду успішно видалено" };
   }
 
-  // Отримання спонсорів команди (M:M)
   async getSponsors(teamId) {
     return await teamDao.getTeamSponsors(teamId);
+  }
+
+  // ЛАБКА 5
+
+  async addSponsor(data) {
+    if (!data.name || !data.industry) {
+      throw new Error("Необхідно вказати name та industry");
+    }
+    await teamDao.callAddSponsor(data.name, data.industry);
+    return { message: "Спонсора успішно додано через процедуру" };
+  }
+
+  async addSponsorshipByNames(data) {
+    const { teamName, sponsorName, contractMln, startYear } = data;
+    if (!teamName || !sponsorName || !contractMln || !startYear) {
+      throw new Error(
+        "Необхідно вказати teamName, sponsorName, contractMln, startYear",
+      );
+    }
+    await teamDao.callAddSponsorshipByNames(
+      teamName,
+      sponsorName,
+      contractMln,
+      startYear,
+    );
+    return { message: "Спонсорський контракт успішно створено" };
+  }
+
+  async generateTestSponsors() {
+    await teamDao.callGenerateTestSponsors();
+    return { message: "10 тестових спонсорів успішно згенеровано" };
+  }
+
+  async getMaxDriverSalary() {
+    const data = await teamDao.callShowMaxDriverSalary();
+    return data;
+  }
+
+  async splitDrivers() {
+    await teamDao.callSplitDriversRandomly();
+    return {
+      message:
+        "Гонщиків успішно розподілено по нових динамічних таблицях курсором",
+    };
   }
 }
 

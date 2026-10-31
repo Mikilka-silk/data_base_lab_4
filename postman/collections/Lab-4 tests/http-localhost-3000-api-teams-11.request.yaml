@@ -1,0 +1,6 @@
+$kind: http-request
+name: http://localhost:3000/api/teams/11
+description: ""
+url: http://localhost:3000/api/teams/11
+method: DELETE
+order: 1000

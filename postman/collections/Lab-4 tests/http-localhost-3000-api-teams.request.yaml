@@ -1,0 +1,17 @@
+$kind: http-request
+name: http://localhost:3000/api/teams
+description: ""
+url: http://localhost:3000/api/teams
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"name\": \"Феррарі-2.0\",\r
+
+    \  \"base_location\": \"Львів\",\r
+
+    \  \"team_principal\": \"Іван Волос\"\r
+
+    }"
+order: 3000

@@ -61,6 +61,53 @@ class TeamController {
       res.status(500).json({ message: error.message });
     }
   }
+
+  // ЛАБКА 5
+
+  async createSponsor(req, res) {
+    try {
+      const result = await teamService.addSponsor(req.body);
+      res.status(201).json(result);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  }
+
+  async createSponsorship(req, res) {
+    try {
+      const result = await teamService.addSponsorshipByNames(req.body);
+      res.status(201).json(result);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  }
+
+  async generateTestSponsors(req, res) {
+    try {
+      const result = await teamService.generateTestSponsors();
+      res.status(201).json(result);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+  async getMaxSalary(req, res) {
+    try {
+      const result = await teamService.getMaxDriverSalary();
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+  async splitDrivers(req, res) {
+    try {
+      const result = await teamService.splitDrivers();
+      res.status(201).json(result);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
 }
 
 module.exports = new TeamController();
